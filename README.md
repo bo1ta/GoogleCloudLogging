@@ -1,3 +1,13 @@
+# Note
+
+Original implementation can be found [here](https://github.com/DnV1eX/GoogleCloudLogging).
+
+My fork includes several changes, like:
+
+1. Making `GoogleCloudLogging` an actor. Migrated completion handlers to modern concurrency.
+2. Removed `@Atomic` property wrapper and used `ManagedCriticalState` from `swift-async-algorithms` to protect global state, and an `OSAllocatedUnfairLock` to protect the instance-specific state.
+3. Writing the logs to file doesn't happen all the time now. `flushTimer` is responsible for scheduling the writes. This is in order to avoid too many writes
+
 # GoogleCloudLogging
 
 Event logging for client applications on [Apple platforms](#supported-platforms) with support for offline work and automatic upload to [Google Cloud (GCP)](https://cloud.google.com). The package depends on [SwiftLog](https://github.com/apple/swift-log) - an official logging API for Swift, so it can be easly integrated into the project and combined with other logging backends. Log events are stored locally in the [JSON Lines](http://jsonlines.org) file format and bulk uploaded to GCP using the [Cloud Logging API v2](https://cloud.google.com/logging/docs/reference/v2/rest) at time intervals, upon defined event or explicit request.
