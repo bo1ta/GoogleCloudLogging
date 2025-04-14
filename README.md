@@ -6,7 +6,7 @@ My fork includes several changes, like:
 
 1. Making `GoogleCloudLogging` an actor. Migrated completion handlers to modern concurrency.
 2. Removed `@Atomic` property wrapper and used `ManagedCriticalState` from `swift-async-algorithms` to protect global state, and an `OSAllocatedUnfairLock` to protect the instance-specific state.
-3. Writing the logs to file doesn't happen all the time now. `flushTimer` is responsible for scheduling the writes. This is in order to avoid too many writes
+3. Writing the logs to file isn't instant time now. `flushTimer` is responsible for scheduling the writes. This is in order to avoid too many writes at once (e.g. Logging is spammed)
 
 # GoogleCloudLogging
 
