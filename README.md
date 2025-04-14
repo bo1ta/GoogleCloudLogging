@@ -4,9 +4,9 @@ Original implementation can be found [here](https://github.com/DnV1eX/GoogleClou
 
 My fork includes several changes, like:
 
-1. Making `GoogleCloudLogging` an actor. Migrated completion handlers to modern concurrency.
-2. Removed `@Atomic` property wrapper and used `ManagedCriticalState` from `swift-async-algorithms` to protect global state, and an `OSAllocatedUnfairLock` to protect the instance-specific state.
-3. Writing the logs to file isn't instant time now. `flushTimer` is responsible for scheduling the writes. This is in order to avoid too many writes at once (e.g. Logging is spammed)
+1. Converted `GoogleCloudLogging` to an actor. Migrated completion handlers to modern concurrency.
+2. Converted `GoogleCloudLogHandler` to a struct, as recommended in the swift-log documentation.
+3. Created a shared instance `LogEngine` that can be mocked / replaced via the `LogEngineRegistry` container. The `LogEngine` instance since is thread-safe as its mutable state is protected by a `ManagedCriticalState`.
 
 # GoogleCloudLogging
 
